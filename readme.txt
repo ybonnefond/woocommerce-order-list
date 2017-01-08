@@ -1,14 +1,13 @@
-=== WooCommerce Simply Order Export ===
-Contributors: ankitgadertcampcom
-Donate link: http://sharethingz.com
+=== WooCommerce Order Quantities list ===
+Contributors: ybonnefond
 Tags: woocommerce, order, export, csv, duration, woocommerce-order, woocommerce-order-export
 Requires at least: 4.0
 Tested up to: 4.2.2
-Stable tag: 1.2.5
+Stable tag: 0.0.1
 License: GPLv2 or later (of-course)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Export WooCommerce order details in csv format.
+Export WooCommerce orders product quantities.
 
 == Description ==
 This plugin exports data of WooCommerce orders, which may include Customer Name, Product details along with quantity, name and variation details, Amount paid., Customer Email and Order status. The data will be exported in the form of csv file.
@@ -67,76 +66,8 @@ Activate it through the 'Plugins' section.
 
 Go to advanced options and then check statuses you want to export.
 
-= How to add more fields to csv ? =
-
-Please use wpg_order_columns and wpg_before_csv_write hooks for performing this activity. Little WordPress programming knowledge is necessary for accomplishing this.
-
-You can also opt for woocommerce simply order export add-on, it is available [here](http://sharethingz.com/woocommerce-simply-order-export-add-on/?utm_source=readme&utm_medium=plugin&utm_campaign=wsoe). It adds all the fields related to orders and allows users to reorder the fields using drag and drop interface.
 
 == Changelog ==
 
-= 1.2.5 =
-* Bug Fix: admin help class class_exists missing parameter.
-
-= 1.2.4 =
-* Bug Fix: Getting order number instead of order post ID.
-* Usability: Added usability instructions in help tab on plugin settings page.
-* Added parameters to wpg_add_values_to_csv filter.
-* .po file updated.
-
-= 1.2.3 =
-* Feature Added: Each prouct for order in a different row.
-* Feature Added: Quantity and Variation added as separate fields.
-
-= 1.2.2 =
-* Added 'wsoe_query_args' filter to filter query arguments.
-* Added 'Settings' action link on plugin page, so that users can easily navigate to order export settings page.
-
-= 1.2.1 =
-* Added dismissible notice for WooCommerce Simply Order Export Add-On.
-
-= 1.2.0 =
-* Fixed capability issue to download csv. Given manage_woocommerce capability.
-* Added support for wsoe add-on.
-
-= 1.1.6 =
-* Fixed variation issue for WooCommerce 2.3.7.
-
-= 1.1.5 =
-* Fixed variation details bug in csv.
-
-= 1.1.4 =
-* Added custom delimiter option.
-* wpg_delimiter filter to override user-defined delimiter.
-
-= 1.1.3 =
-* Changed hooks position.
-* Order object passed as parameter to wpg_before_csv_write hook.
-
-= 1.1.2 =
-* Fixed script enqueue bug.
-
-= 1.1.1 =
-* Added advanced options in settings page.
-* UI improvements.
-
-= 1.1.0 =
-* Fixed Phone number export bug.
-* Made plugin translation ready.
-* Main file changed to class based structure.
-* Added po file for translation contribution.
-
-= 1.0.3 =
-* Fixed "invalid request" js error.
-
-= 1.0.2 =
-* Added nonce to export request to make it more secure.
-* Renamed file order_export_process to order-export-process.
-* Check for ABSPATH constant at start of files to avoid data leaks.
-* Check for WooCommerce installation in main plugin file.
-
-= 1.0.1 =
-* Added 'wpg_order_statuses' hook to filter post status in export query.
-
-= 1.0.0 =
+= 0.0.1 =
 * First release.

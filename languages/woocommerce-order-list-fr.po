@@ -1,0 +1,244 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Woocommerce order list\n"
+"POT-Creation-Date: 2017-01-08 16:18+0100\n"
+"PO-Revision-Date: 2017-01-08 16:52+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../classes/class-order-export-admin-help.php:24
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: ../classes/class-order-export-admin-help.php:31
+#: ../classes/class-order-export.php:79
+msgid "Order Export"
+msgstr "Exporter les commandes"
+
+#: ../classes/class-order-export-admin-help.php:34
+msgid "Please use following steps to use the plugin."
+msgstr "Veuillez suivre ces étapes pour utiliser l’extension."
+
+#: ../classes/class-order-export-admin-help.php:36
+msgid "Choose the fields you want to export."
+msgstr "Choisissez les champs que vous souhaitez exporter."
+
+#: ../classes/class-order-export-admin-help.php:37
+msgid "Click Save Settings button at the bottom of the page."
+msgstr "Cliquez sur le bouton Enregistrez les paramètres au bas de la page."
+
+#: ../classes/class-order-export-admin-help.php:38
+msgid "Click Advanced Options to explore more controls."
+msgstr "Cliquez sur Options Avancées pour afficher plus de choix."
+
+#: ../classes/class-order-export-admin-help.php:39
+msgid "Select the duration for which you want to export orders."
+msgstr "Sélectionnez la période de commandes à exporter."
+
+#: ../classes/class-order-export-admin-help.php:40
+msgid "Click Export Order button."
+msgstr "Cliquez sur le bouton Exporter les commandes."
+
+#: ../classes/class-order-export-process.php:124
+msgid "Unable to create csv file, upload folder not writable"
+msgstr "Impossible d’écrire dans le dossier upload et de créer le fichier csv."
+
+#: ../classes/class-order-export-process.php:154
+msgid "No orders for specified duration."
+msgstr "Aucune commandes pour la période donnée"
+
+#: ../classes/class-order-export.php:68
+msgid "Settings"
+msgstr "Paramètres"
+
+#: ../classes/class-order-export.php:113
+msgid "WooCommerce Order Export"
+msgstr "Exporter les quantités des commandes"
+
+#: ../classes/class-order-export.php:121
+msgid "Please choose settings for order export."
+msgstr "Choisir les paramètres d’export des commandes"
+
+#: ../classes/class-order-export.php:125 ../classes/class-order-export.php:127
+#: ../main.php:92
+msgid "Order ID"
+msgstr "Identifiant  Commande"
+
+#: ../classes/class-order-export.php:132 ../classes/class-order-export.php:134
+#: ../main.php:93
+msgid "Customer Name"
+msgstr "Nom du client"
+
+#: ../classes/class-order-export.php:139
+msgid "Amount"
+msgstr "Total"
+
+#: ../classes/class-order-export.php:141
+msgid "Amount paid by customer"
+msgstr "Total Payé par le client"
+
+#: ../classes/class-order-export.php:146
+msgid "Email"
+msgstr "Email"
+
+#: ../classes/class-order-export.php:148
+msgid "Email of customer"
+msgstr "Email Client"
+
+#: ../classes/class-order-export.php:153
+msgid "Phone"
+msgstr "Téléphone"
+
+#: ../classes/class-order-export.php:155
+msgid "Phone number of customer"
+msgstr "Téléphone client"
+
+#: ../classes/class-order-export.php:160
+msgid "Status"
+msgstr "Statuts"
+
+#: ../classes/class-order-export.php:162 ../classes/class-order-export.php:189
+#: ../main.php:100
+msgid "Order Status"
+msgstr "Statuts de la commande"
+
+#: ../classes/class-order-export.php:187
+msgid "Advanced Options"
+msgstr "Options avancées"
+
+#: ../classes/class-order-export.php:210
+msgid "Select Duration and Export"
+msgstr "Sélectionner la période et exporter"
+
+#: ../classes/class-order-export.php:215
+msgid "Start Date"
+msgstr "Depuis"
+
+#: ../classes/class-order-export.php:219
+msgid "End Date"
+msgstr "jusqu’à"
+
+#: ../classes/class-order-export.php:224
+msgid "Export Orders"
+msgstr "Exporter les commandes"
+
+#: ../classes/class-order-export.php:240
+msgid "Click to see advanced options"
+msgstr "Afficher les paramètres avancés"
+
+#: ../classes/class-order-export.php:240
+msgid "Advanced options"
+msgstr "Paramètres avancés"
+
+#: ../classes/class-order-export.php:241
+msgid "These are one time use options and will not be saved."
+msgstr "Ces paramètres ne sont pas sauvegardés"
+
+#: ../classes/class-order-export.php:249
+msgid "Order Export Filename"
+msgstr "Nom du fichier exporté"
+
+#: ../classes/class-order-export.php:250
+msgid "This will be the downloaded csv filename"
+msgstr "Ceci sera le fichier cdv téléchargé"
+
+#: ../classes/class-order-export.php:252
+msgid ".csv"
+msgstr ".csv"
+
+#: ../classes/class-order-export.php:257
+msgid "Order Statuses"
+msgstr "Statuts des commandes"
+
+#: ../classes/class-order-export.php:258
+msgid ""
+"Orders with only selected status will be exported, if none selected then all "
+"order status will be exported"
+msgstr ""
+"Seul les commandes dont le statuts est sélectionné seront exportés. Si aucun "
+"statuts n’est sélectionné toutes les commandes seront exportées."
+
+#: ../classes/class-order-export.php:261
+msgid "Completed"
+msgstr "Terminé"
+
+#: ../classes/class-order-export.php:262
+msgid "Processing"
+msgstr "Paiement reçu, en cours de traitement"
+
+#: ../classes/class-order-export.php:263
+msgid "On hold"
+msgstr "En attente"
+
+#: ../classes/class-order-export.php:264
+msgid "Pending"
+msgstr "En attente de paiement"
+
+#: ../classes/class-order-export.php:265
+msgid "Cancelled"
+msgstr "Annulé"
+
+#: ../classes/class-order-export.php:266
+msgid "Refunded"
+msgstr "Remboursé"
+
+#: ../classes/class-order-export.php:267
+msgid "Failed"
+msgstr "Echec"
+
+#: ../classes/class-order-export.php:274
+msgid "Delimiter"
+msgstr "Séparateur"
+
+#: ../classes/class-order-export.php:275
+msgid "Delimiter for exported file."
+msgstr "Séparateur pour le ficher exporté"
+
+#: ../classes/class-order-export.php:299
+msgid "Enter both dates"
+msgstr "Entrer les 2 dates"
+
+#: ../classes/class-order-export.php:303
+msgid "Invalid start date."
+msgstr "Date de début invalide"
+
+#: ../classes/class-order-export.php:307
+msgid "Invalid end date."
+msgstr "Date de fin invalide"
+
+#: ../classes/class-order-export.php:311
+msgid "Invalid request"
+msgstr "Requête invalide"
+
+#: ../classes/class-order-export.php:313
+msgid "Invalid nonce."
+msgstr "Nonce invalide"
+
+#: ../classes/class-order-export.php:317
+msgid ""
+"Invalid CSV filename. Only letters, numbers, dashes and underscore are "
+"allowed."
+msgstr ""
+"Nom du fichier invalide. Seul les lettres, chiffres, tirets et souligné sont "
+"autorisés."
+
+#: ../main.php:97
+msgid "Order Amount"
+msgstr "Montant de la commande"
+
+#: ../main.php:98
+msgid "Customer Email"
+msgstr "Email du client"
+
+#: ../main.php:99
+msgid "Phone Number"
+msgstr "Téléphone"

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Woocommerce simply order export\n"
+"Project-Id-Version: Woocommerce order list\n"
 "POT-Creation-Date: 2015-07-19 19:32+0530\n"
 "PO-Revision-Date: 2015-07-19 19:32+0530\n"
 "Last-Translator: \n"
@@ -54,26 +54,6 @@ msgstr ""
 msgid "Order Status"
 msgstr ""
 
-#: ../views/html-notice-addon-support.php:12
-msgid "Want to add more fields woocommerce simply order export?"
-msgstr ""
-
-#: ../views/html-notice-addon-support.php:13
-msgid "Want to reorder fields in woocommerce simply order export?"
-msgstr ""
-
-#: ../views/html-notice-addon-support.php:16
-msgid "Try Order Export Add-on"
-msgstr ""
-
-#: ../views/html-notice-addon-support.php:17
-msgid "Donate to this plugin"
-msgstr ""
-
-#: ../views/html-notice-addon-support.php:18
-msgid "Hide this notice"
-msgstr ""
-
 #: ../classes/class-order-export-process.php:102
 msgid "Unable to create csv file, upload folder not writable"
 msgstr ""
@@ -89,12 +69,6 @@ msgstr ""
 #: ../classes/class-order-export-admin-help.php:31
 #: ../classes/class-order-export.php:79
 msgid "Order Export"
-msgstr ""
-
-#: ../classes/class-order-export-admin-help.php:34
-msgid ""
-"Thank you for using <strong>WooCommerce Simply Order Export</strong> "
-"plugin :)"
 msgstr ""
 
 #: ../classes/class-order-export-admin-help.php:36

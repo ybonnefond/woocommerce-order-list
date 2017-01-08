@@ -1,10 +1,9 @@
 <?php
 /**
- * Plugin Name: WooCommerce Simply Order Export
- * Description: Downloads order details in csv format
- * Version: 1.2.5
- * Author: Ankit Gade
- * Author URI: http://sharethingz.com
+ * Plugin Name: WooCommerce Orders quantities
+ * Description: Downloads order quantities in csv format
+ * Version: 0.0.1
+ * Author: Yannick Bonnefond
  * License: GPL2
  */
 
@@ -27,7 +26,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string
 		 */
-		public $version = '1.2.5';
+		public $version = '0.0.1';
 
 		/**
 		 * Constructor
@@ -58,7 +57,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		function load_plugin_textdomain() {
 
-			load_plugin_textdomain( 'woocommerce-simply-order-export', false, plugin_basename( dirname( __FILE__ ) ) . "/languages" );
+			load_plugin_textdomain( 'woocommerce-order-list', false, plugin_basename( dirname( __FILE__ ) ) . "/languages" );
 		}
 
 		/**
@@ -69,7 +68,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			/**
 			 * Check for valid names
 			 */
-			if( in_array( $name, array( 'wpg_order_export', 'wpg_order_columns' ) ) ){				
+			if( in_array( $name, array( 'wpg_order_export', 'wpg_order_columns' ) ) ){
 				$GLOBALS[$name] = $value;
 			}
 		}
@@ -89,19 +88,18 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Set necessary variables.
 		 */
 		function set_variables() {
-
 			$this->wpg_order_columns = apply_filters( 'wpg_order_columns', array(
-												'wc_settings_tab_order_id'=>__( 'Order ID', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_customer_name'=>__( 'Customer Name', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_product_name'=>__( 'Product Name', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_product_quantity'=>__( 'Product Quantity', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_product_variation'=>__( 'Variation details', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_amount'=> __( 'Order Amount', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_customer_email'=> __( 'Customer Email', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_customer_phone'=>__( 'Phone Number', 'woocommerce-simply-order-export' ),
-												'wc_settings_tab_order_status'=>__( 'Order Status', 'woocommerce-simply-order-export' )
-											)
-										);
+					'wc_settings_tab_order_id'=>__( 'Order ID', 'woocommerce-order-list' ),
+					'wc_settings_tab_customer_name'=>__( 'Customer Name', 'woocommerce-order-list' ),
+					// 'wc_settings_tab_product_name'=>__( 'Product Name', 'woocommerce-order-list' ),
+					// 'wc_settings_tab_product_quantity'=>__( 'Product Quantity', 'woocommerce-order-list' ),
+					// 'wc_settings_tab_product_variation'=>__( 'Variation details', 'woocommerce-order-list' ),
+					'wc_settings_tab_amount'=> __( 'Order Amount', 'woocommerce-order-list' ),
+					'wc_settings_tab_customer_email'=> __( 'Customer Email', 'woocommerce-order-list' ),
+					'wc_settings_tab_customer_phone'=>__( 'Phone Number', 'woocommerce-order-list' ),
+					'wc_settings_tab_order_status'=>__( 'Order Status', 'woocommerce-order-list' )
+				)
+			);
 		}
 
 		/**

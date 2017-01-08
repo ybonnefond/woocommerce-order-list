@@ -12,10 +12,10 @@ if( !class_exists('order_export_process') ) {
 
 		/**
 		 * Tells which fields to export.
-		 * 
+		 *
 		 * Also reset orders of fields according to which they were added
 		 * in plugin.
-		 * 
+		 *
 		 * Refer this support link: https://wordpress.org/support/topic/change-order-5?replies=7#post-6818741
 		 */
 		static function export_options() {
@@ -50,7 +50,7 @@ if( !class_exists('order_export_process') ) {
 
 					$new_order[$_setting] = $wpg_order_columns[$_setting];
 				}
-				
+
 				$wpg_order_columns = $new_order;
 			}
 
@@ -63,14 +63,36 @@ if( !class_exists('order_export_process') ) {
 			return $fields;
 		}
 
+		static function get_products() {
+			$products = [];
+			$args = array(
+				'post_type' => 'product',
+				'posts_per_page' => -1
+			);
+
+			$loop = new WP_Query( $args );
+
+			while ( $loop->have_posts() ) : $loop->the_post();
+				global $product;
+				$products[$product->get_id()] = [
+					'title' => $product->get_title()
+				];
+			endwhile;
+
+			wp_reset_postdata();
+			return $products;
+		}
+
 		/**
 		 * Returns order details
 		 */
 		static function get_orders() {
+			$products = static::get_products();
 
 			$fields		=	self::export_options();
 			$fields		=	array_filter( $fields, 'wpg_array_filter' );
-			$headings	=	self::csv_heading($fields);
+
+			$headings	=	self::csv_heading($fields, $products);
 
 			$delimiter	=	( empty( $_POST['wpg_delimiter'] ) || ( gettype( $_POST['wpg_delimiter'] ) !== 'string' ) ) ? ',' : $_POST['wpg_delimiter'][0];
 
@@ -99,10 +121,10 @@ if( !class_exists('order_export_process') ) {
 				$csv_file = self::create_csv_file();
 
 				if( empty($csv_file) ) {
-					return new WP_Error( 'not_writable', __( 'Unable to create csv file, upload folder not writable', 'woocommerce-simply-order-export' ) );
+					return new WP_Error( 'not_writable', __( 'Unable to create csv file, upload folder not writable', 'woocommerce-order-list' ) );
 				}
 
-				fputcsv( $csv_file, $headings, self::$delimiter );
+				static::addToFile( $csv_file, $headings);
 
 				/**
 				 * Loop over each order
@@ -119,38 +141,53 @@ if( !class_exists('order_export_process') ) {
 					 * Check if we need to export product name.
 					 * If yes, then create new row for each product.
 					 */
-					if( array_key_exists( 'wc_settings_tab_product_name', $fields ) ) {
+					// if( array_key_exists( 'wc_settings_tab_product_name', $fields ) ) {
 
-						$items = $order_details->get_items();
-
-						foreach( $items as $item_id=>$item ) {
-
-							$csv_values = array();
-							self::add_fields_diff_row( $fields, $csv_values, $order_details, $item_id, $item );
-							fputcsv( $csv_file, $csv_values, self::$delimiter );
-						}
-
-					}else{
-						/**
-						 * Create a single row for order.
-						 */
-						self::add_fields_diff_row( $fields, $csv_values, $order_details );
-						fputcsv( $csv_file, $csv_values, self::$delimiter );
-					}
-
+					self::add_fields_diff_row( $fields, $csv_values, $order_details );
+					self::add_products_row($products, $csv_values, $order_details);
+					static::addToFile( $csv_file, $csv_values);
 				}
 				wp_reset_postdata();
 
 			}else {
 
-				return new WP_Error( 'no_orders', __( 'No orders for specified duration.', 'woocommerce-simply-order-export' ) );
+				return new WP_Error( 'no_orders', __( 'No orders for specified duration.', 'woocommerce-order-list' ) );
 			}
 		}
 
+		static function add_products_row($products, &$csv_values, $order_details) {
+			$items = static::extract_order_products_quantities($order_details);
+			foreach($products as $id => $product) {
+				array_push( $csv_values, isset($items[$id]) ? $items[$id] : 0 );
+			}
+		}
+
+		static function addToFile($csv_file, $csv_values) {
+			array_walk($csv_values, function($value) {
+				return '"' . str_replace('"', '', $value) . '"';
+			});
+
+			fputcsv( $csv_file, $csv_values, self::$delimiter );
+		}
+
+		static function extract_order_products_quantities($order_details) {
+			$products = [];
+			$lineItems = $order_details->get_items();
+			foreach($lineItems as $lineItemId => $lineItem) {
+				$productId = $lineItem['product_id'];
+				if (!isset($products[$productId])) {
+					$products[$productId] = 0;
+				}
+				$products[$productId] += $lineItem['qty'];
+			}
+
+			return $products;
+		}
+
 		/**
-		 * 
+		 *
 		 */
-		static function add_fields_diff_row( $fields, &$csv_values, $order_details, $item_id = null, $current_item = null ) {
+		static function add_fields_diff_row($fields, &$csv_values, $order_details) {
 
 			/**
 			 * Loop over fields and add value for corresponding field.
@@ -174,44 +211,12 @@ if( !class_exists('order_export_process') ) {
 					break;
 
 					/**
-					 * Check if we need product name.
-					 */
-					case 'wc_settings_tab_product_name':
-						array_push( $csv_values, $current_item['name'] );
-					break;
-
-					/**
-					 * Check if we need product quantity.
-					 * Product quantity will only be exported if user has selected product name to be exported.
-					 * 
-					 * If product name is not selected, this column will be filled with just dashes. ;)
-					 */
-					case 'wc_settings_tab_product_quantity':
-						if( array_key_exists( 'wc_settings_tab_product_name', $fields ) ) {
-							array_push( $csv_values, $current_item['qty'] );
-						}else{
-							array_push( $csv_values, '-' ); // pad the quantity column with dash if there is no product name
-						}
-					break;
-					
-					/**
-					 * Check if we need product variations
-					 */
-					case 'wc_settings_tab_product_variation':
-						if( array_key_exists( 'wc_settings_tab_product_name', $fields ) ) {
-							array_push( $csv_values, self::get_product_variation( $item_id, $order_details ) );
-						}else{
-							array_push( $csv_values, '-' );
-						}
-					break;
-
-					/**
 					 * Check if we need order amount.
 					 */
 					case 'wc_settings_tab_amount':
 						array_push( $csv_values, $order_details->get_total() );
 					break;
-							
+
 					/**
 					 * Check if we need customer email.
 					 */
@@ -236,30 +241,29 @@ if( !class_exists('order_export_process') ) {
 					default :
 						/**
 						 * Add values to CSV.
-						 * 
+						 *
 						 * @param array $csv_values Array of csv values, callback function should accept this argument by reference.
-						 * 
+						 *
 						 * @param Object $order_details WC_Order object
-						 * 
+						 *
 						 * @param String $key Current key in loop.
-						 * 
+						 *
 						 */
 						do_action_ref_array( 'wpg_add_values_to_csv', array( &$csv_values, $order_details, $key, $fields, $item_id, $current_item ) );
 					break;
 				}
 			}
-
 		}
-		
+
 		/**
 		 * Returns customer related meta.
 		 * Basically it is just get_post_meta() function wrapper.
 		 */
 		static function customer_meta( $order_id , $meta = '' ) {
-			
+
 			if( empty( $order_id ) || empty( $meta ) )
 				return '';
-			
+
 			return get_post_meta( $order_id, $meta, true );
 		}
 
@@ -307,7 +311,7 @@ if( !class_exists('order_export_process') ) {
 
 			return $variation_details = implode( ' | ', $variation_details );
 		}
-		
+
 		/**
 		 * Returns customer name for particular order
 		 * @param type $order_id
@@ -322,13 +326,13 @@ if( !class_exists('order_export_process') ) {
 			$firstname = get_post_meta( $order_id, '_billing_first_name', true );
 			$lastname  = get_post_meta( $order_id, '_billing_last_name', true );
 
-			return trim( $firstname.' '. $lastname );			
+			return trim( $firstname.' '. $lastname );
 		}
 
 		/**
 		 * Makes first row for csv
 		 */
-		static function csv_heading( $fields ) {
+		static function csv_heading( $fields, $products ) {
 
 			if( !is_array( $fields ) ){
 				return false;
@@ -344,6 +348,10 @@ if( !class_exists('order_export_process') ) {
 				}
 			}
 
+			foreach($products as $id => $product) {
+				array_push( $headings, $product['title']);
+			}
+
 			return $headings;
 
 		}
@@ -354,7 +362,8 @@ if( !class_exists('order_export_process') ) {
 		static function create_csv_file() {
 
 			$upload_dir = wp_upload_dir();
-			return $csv_file = fopen( $upload_dir['basedir']. '/order_export.csv', 'w+');
+			$csv_file = fopen( $upload_dir['basedir']. '/order_export.csv', 'w+');
+			return $csv_file;
 		}
 	}
 }

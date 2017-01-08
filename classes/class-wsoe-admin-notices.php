@@ -7,7 +7,6 @@ if( !class_exists('wsoe_admin_notices') ) {
 	class wsoe_admin_notices {
 
 		function __construct() {
-
 			add_action( 'admin_print_styles', array( $this, 'check_wsoe_messages' ) );
 			add_action( 'wp_loaded', array( $this, 'wsoe_hide_notices' ) );
 		}
@@ -15,7 +14,7 @@ if( !class_exists('wsoe_admin_notices') ) {
 		static function update_notices() {
 
 			$wsoe_messages = array();
-			if( !in_array( 'woocommerce-simply-order-export-add-on/main.php', apply_filters( 'active_plugins', get_option( 'active_plugins' )) ) ) {
+			if( !in_array( 'woocommerce-order-list-add-on/main.php', apply_filters( 'active_plugins', get_option( 'active_plugins' )) ) ) {
 				$wsoe_messages['wsoe_addon_installed'] = false;
 				$wsoe_messages['wsoe_addon_notice_display'] = true;
 			}else {
@@ -34,7 +33,7 @@ if( !class_exists('wsoe_admin_notices') ) {
 			$wsoe_messages = get_option('wsoe_messages', array());
 			$wsoe_messages = wp_parse_args( $wsoe_messages, array('wsoe_addon_installed'=>false, 'wsoe_addon_notice_display'=>true ) );
 			if ( ( !$wsoe_messages['wsoe_addon_installed'] ) &&  ( $wsoe_messages['wsoe_addon_notice_display'] ) ) {
-				add_action( 'admin_notices', array( $this, 'install_addon' ) );
+				// add_action( 'admin_notices', array( $this, 'install_addon' ) );
 			}
 		}
 
@@ -58,13 +57,13 @@ if( !class_exists('wsoe_admin_notices') ) {
 				case 'wsoe_addon_notice':
 					self::hide_wsoe_addon_notice();
 				break;
-			
+
 				default :
 					do_action('wsoe_hide_notice_'.$notice);
 					break;
 			}
 		}
-		
+
 		static function hide_wsoe_addon_notice() {
 			$wsoe_messages = get_option('wsoe_messages', array());
 			$wsoe_messages['wsoe_addon_notice_display'] = false;
