@@ -228,7 +228,7 @@ if( !class_exists('order_export_process') ) {
 					 * Check if we need customer phone.
 					 */
 					case 'wc_settings_tab_customer_phone':
-						array_push( $csv_values, self::customer_meta( get_the_ID(), '_billing_phone' ) );
+						array_push( $csv_values, 'tel: ' . self::customer_meta( get_the_ID(), '_billing_phone' ) );
 					break;
 
 					/**
